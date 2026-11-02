@@ -6,7 +6,6 @@ import type { ChatMessage, Settings, UserProfile } from "@/lib/types";
 export const company = {
   name: "Fernway",
   domain: "fernway.com",
-  landingUrl: "https://chilla-azure.vercel.app/",
 };
 
 export const suggestedPrompts = [

@@ -1,7 +1,6 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { company } from "@/data/workspace";
 import { Mascot } from "@/components/ui/Mascot";
 import { MeetingModal } from "@/components/meeting/MeetingModal";
 import { ProfilePanel } from "@/components/people/ProfilePanel";
@@ -18,10 +17,10 @@ export function WorkspaceShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex h-dvh flex-col md:p-4 md:pt-3">
       <div className="hidden items-center justify-between px-1 pb-3 md:flex">
-        <a href={company.landingUrl} className="flex items-center gap-2 text-2xl font-black tracking-tighter">
+        <div className="flex items-center gap-2 text-2xl font-black tracking-tighter">
           <Mascot className="h-9 w-9" /> chilla
           <span className="pill ml-1 bg-blue-soft text-blue">interactive demo</span>
-        </a>
+        </div>
         <p className="hand -rotate-1 text-xl">a pretend Slack workspace, so poke around! ✦</p>
       </div>
 
