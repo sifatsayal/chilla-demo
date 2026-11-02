@@ -1,26 +1,182 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ------------------------------------------------------------------
+   Chilla brand tokens: copied from the landing page (chilla-azure.vercel.app).
+   Change a color here and it updates everywhere: use them in Tailwind
+   as bg-ink, text-muted, border-ink, bg-blue-soft, shadow-brutal …
+   ------------------------------------------------------------------ */
+@theme {
+  --color-fur: #7e87a2;
+  --color-ear: #c8cdd9;
+  --color-belly: #f5f1eb;
+  --color-ink: #1e2232;
+  --color-ink-2: #2a2f44;
+  --color-nose: #e39695;
+  --color-blue: #3d6fe0;
+  --color-blue-soft: #e6edfc;
+  --color-paper: #f7f3ed;
+  --color-muted: #5d6378;
+  --color-yellow: #fde9a8;
+  --color-pink-soft: #f9dcdb;
+  --color-mint: #d7f0e3;
+  --color-green: #3fb27f;
+
+  --font-sans: var(--font-outfit), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-hand: var(--font-caveat), "Comic Sans MS", cursive;
+
+  --shadow-brutal: 4px 4px 0 var(--color-ink);
+  --shadow-brutal-sm: 2px 2px 0 var(--color-ink);
+  --shadow-fur: 3px 3px 0 var(--color-fur);
+
+  --radius-card: 14px;
+
+  --animate-pop: pop 0.22s ease-out;
+  --animate-slide-in: slide-in 0.22s ease-out;
+  --animate-bounce-dot: bounce-dot 1s infinite ease-in-out;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@keyframes pop {
+  from { opacity: 0; transform: translateY(6px) scale(0.98); }
+  to { opacity: 1; transform: none; }
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes bounce-dot {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-4px); opacity: 1; }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-paper);
+  /* faint dotted-grid notebook paper, as on the landing page */
+  background-image: radial-gradient(rgba(30, 34, 50, 0.09) 1px, transparent 1px);
+  background-size: 22px 22px;
+  color: var(--color-ink);
+}
+
+/* ------------------------------------------------------------------
+   Reusable brand components. Prefer these over one-off styles so the
+   prototype stays visually consistent.
+   ------------------------------------------------------------------ */
+@layer components {
+  .card {
+    background: #fff;
+    border: 2px solid var(--color-ink);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-brutal);
+  }
+  .card-flat {
+    background: #fff;
+    border: 2px solid var(--color-ink);
+    border-radius: var(--radius-card);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1;
+    padding: 11px 18px;
+    color: #fff;
+    background: var(--color-ink);
+    border: 2px solid var(--color-ink);
+    border-radius: 10px;
+    box-shadow: var(--shadow-fur);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .btn:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--color-fur); }
+  .btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 var(--color-fur); }
+  .btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: var(--shadow-fur); }
+  .btn-ghost { background: #fff; color: var(--color-ink); box-shadow: var(--shadow-brutal-sm); }
+  .btn-ghost:hover { box-shadow: 3px 3px 0 var(--color-ink); }
+  .btn-blue { background: var(--color-blue); border-color: var(--color-ink); }
+  .btn-sm { padding: 7px 12px; font-size: 0.82rem; border-radius: 8px; }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border: 1.5px solid var(--color-ink);
+    border-radius: 999px;
+    background: var(--color-pink-soft);
+    white-space: nowrap;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border: 1.5px solid var(--color-ink);
+    border-radius: 8px;
+    background: var(--color-belly);
+  }
+
+  .input {
+    width: 100%;
+    font: inherit;
+    font-size: 0.95rem;
+    padding: 10px 12px;
+    border: 2px solid var(--color-ink);
+    border-radius: 10px;
+    background: #fff;
+  }
+  .input:focus,
+  .btn:focus-visible,
+  .chip:focus-visible {
+    outline: 3px solid var(--color-blue);
+    outline-offset: 1px;
+  }
+
+  .label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .hand {
+    font-family: var(--font-hand);
+    color: var(--color-blue);
+    line-height: 1.1;
+  }
+
+  /* hand-drawn highlighter swipe behind a word */
+  .hl {
+    position: relative;
+    z-index: 0;
+    white-space: nowrap;
+  }
+  .hl::after {
+    content: "";
+    position: absolute;
+    left: -3px;
+    right: -4px;
+    bottom: 0.06em;
+    height: 0.34em;
+    z-index: -1;
+    background: var(--color-nose);
+    opacity: 0.55;
+    border-radius: 40% 60% 50% 45%;
+    transform: rotate(-1.5deg);
+  }
+
+  .scroll-thin { scrollbar-width: thin; scrollbar-color: var(--color-ear) transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }
